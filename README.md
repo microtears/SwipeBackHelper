@@ -1,2 +1,2 @@
 # SwipeBackHelper
-A simple android swipe back helper tool
+A simple swipe back helper tool on android
