@@ -5,17 +5,19 @@ import android.view.MotionEvent
 
 class SwipeBackHelper {
     companion object {
-        private val lock = Any()
+        @Volatile
         private var lifecycleHelper: ActivityLifecycleHelper? = null
+
         private fun getLifecycleHelper(): ActivityLifecycleHelper {
             if (lifecycleHelper == null)
-                synchronized(lock) {
+                synchronized(SwipeBackHelper::class.java) {
                     if (lifecycleHelper == null)
                         lifecycleHelper = ActivityLifecycleHelper()
                 }
             return lifecycleHelper!!
         }
 
+        @JvmStatic
         fun init(application: Application) {
             application.registerActivityLifecycleCallbacks(getLifecycleHelper())
         }

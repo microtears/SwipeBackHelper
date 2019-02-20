@@ -18,6 +18,9 @@ class TouchHelper(private val lifecycleHelper: ActivityLifecycleHelper) {
         private const val STATE_IDLE = 0
         private const val STATE_DRAGGING = 1
         private const val STATE_SETTLING = 2
+        private const val FULL_EDGE_OFFSET = 100
+        private const val EDGE_WIDTH = 50f
+        private const val SHADOW_WIDTH = 30
         internal var isFullScreen = false
     }
 
@@ -32,13 +35,13 @@ class TouchHelper(private val lifecycleHelper: ActivityLifecycleHelper) {
 
     private val context: Context get() = currentActivity!!
 
-    private var edgeWidth = 50f
-    private var shadowWidth = 30
+
     private var state = STATE_IDLE
     private var isInit = false
     private var needClearColorCurrent = false
     private var needClearColorPrevious = false
 
+    private var lastDownTime = -1L
 
     private fun init() {
         if (isInit) return
@@ -53,21 +56,22 @@ class TouchHelper(private val lifecycleHelper: ActivityLifecycleHelper) {
         val x = ev.rawX
         when (ev.action) {
             MotionEvent.ACTION_DOWN -> {
-                if ((!isFullScreen && x <= edgeWidth) || (isFullScreen && x <= edgeWidth + 100)) {
-                    state = STATE_DRAGGING
-                    startSlide()
-                    return true
-                }
+                lastDownTime = ev.downTime
             }
             MotionEvent.ACTION_POINTER_DOWN -> {
                 return state == STATE_DRAGGING
             }
             MotionEvent.ACTION_MOVE -> {
-                if (state == STATE_DRAGGING) {
+                if (state == STATE_DRAGGING || lastDownTime == -1L) {
                     if (ev.actionIndex != 0) {
                         return true
                     }
                     sliding(x)
+                    return true
+                } else if ((ev.downTime - lastDownTime > 100) && (!isFullScreen && x <= EDGE_WIDTH) || (isFullScreen && x <= EDGE_WIDTH + FULL_EDGE_OFFSET)) {
+                    state = STATE_DRAGGING
+                    startSlide()
+                    return true
                 }
             }
             MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
@@ -78,6 +82,13 @@ class TouchHelper(private val lifecycleHelper: ActivityLifecycleHelper) {
         }
         return false
     }
+
+//    /*
+//    * 忽略点击
+//    * */
+//    private fun checkTime(ev: MotionEvent): Boolean {
+//        return ev.downTime - lastDownTime > 100
+//    }
 
     private fun startAnim(isFinished: Boolean, x: Float) {
         needClearColorCurrent = false
@@ -133,6 +144,7 @@ class TouchHelper(private val lifecycleHelper: ActivityLifecycleHelper) {
         previousView = null
         currentView = null
         shadowView = null
+        lastDownTime = -1
     }
 
 
@@ -153,10 +165,10 @@ class TouchHelper(private val lifecycleHelper: ActivityLifecycleHelper) {
         currentContentView?.addView(previousView, 0)
         if (shadowView == null)
             shadowView = ShadowView(context)
-        val lp = FrameLayout.LayoutParams(shadowWidth, FrameLayout.LayoutParams.MATCH_PARENT)
+        val lp = FrameLayout.LayoutParams(SHADOW_WIDTH, FrameLayout.LayoutParams.MATCH_PARENT)
         shadowView.removeInParent()
         currentContentView?.addView(shadowView, 1, lp)
-        shadowView?.x = -shadowWidth.toFloat()
+        shadowView?.x = -SHADOW_WIDTH.toFloat()
         //set background
         if (currentView?.background == null) {
             val ta = currentActivity!!.theme.obtainStyledAttributes(intArrayOf(android.R.attr.windowBackground))
@@ -177,7 +189,7 @@ class TouchHelper(private val lifecycleHelper: ActivityLifecycleHelper) {
         if (previousView != null) {
             previousView!!.x = -previousView!!.width / 3 + rawX / 3
         }
-        shadowView?.x = -shadowWidth + rawX
+        shadowView?.x = -SHADOW_WIDTH + rawX
         shadowView?.alpha = 1 - (rawX / context.displayWidth)
         Log.d("TH", "alpha=${shadowView?.alpha}")
     }
