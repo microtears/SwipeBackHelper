@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_second.*
 class SecondActivity : AppCompatActivity() {
 
     private val swipeBackHelper = SwipeBackHelper()
+    //private val swipeBackHelper = SwipeBackHelper().apply { isFullScreen = true/*开启全面屏适配*/ }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         return if (!swipeBackHelper.progressTouchEvent(ev))

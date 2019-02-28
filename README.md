@@ -1,25 +1,16 @@
 # SwipeBackHelper
 A simple swipe back helper tool on android
+[![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Download](https://api.bintray.com/packages/swordsoul/line/swipebackhelper/images/download.svg) ](https://bintray.com/swordsoul/line/swipebackhelper/_latestVersion)
 ## Quick Setup
 ### Include library
-```kotlin
-Edit your build.gradle file in your root project and add below repositories
-repositories {
-        google()
-        jcenter()
-        ···
-        maven {
-            url "https://messy.bintray.com/SwipeBackHelper"
-        }
-        ···
-    }
-```
+
 Edit your build.gradle file and add below dependency.
 ```kotlin
 dependencies {
     ···
     def swipebackhelper_version = 1.0
-    implementation "com.messy.swipebackhelper:swipebackhelper:$swipebackhelper_version"
+    implementation 'com.line:swipebackhelper:$swipebackhelper_version'
     ···
 }
 ```
@@ -64,6 +55,7 @@ class YourActivity : AppCompatActivity() {
     ...
 
     private val swipeBackHelper = SwipeBackHelper()
+    //private val swipeBackHelper = SwipeBackHelper().apply { isFullScreen = true }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         return if (!swipeBackHelper.progressTouchEvent(ev))

@@ -49,4 +49,29 @@ repositories {
     mavenCentral()
 }
 
-apply from: "bintrayUpload.gradle"
+
+tasks.withType(Javadoc).all { enabled = false }
+
+ext {
+    package_userOrg = 'swordsoul'
+    package_repo = 'line'
+    package_type = 'aar'
+    package_group = 'com.line'
+    package_artifact = 'swipebackhelper'
+    package_version = '1.0'
+    package_description = 'A simple swipe back helper for android developer'
+
+    siteUrl = 'https://github.com/microtears/SwipeBackHelper'
+    gitUrl = 'https://github.com/microtears/SwipeBackHelper.git'
+
+    developerId = 'line'
+    developerName = 'line'
+    developerEmail = 'microtears@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = 'Apache-2.0'
+}
+
+//apply from: 'https://raw.githubusercontent.com/Jude95/JCenter/v2/bintray.gradle'
+apply from: 'bintray_upload.gradle'
