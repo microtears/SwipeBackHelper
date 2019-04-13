@@ -26,8 +26,8 @@ class DemoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         if (isMainProgress()) {
-            //If yout application is multi-progress
-            //Must call SwipeBackHelper.init(Application) in your main progress
+            //If yout application is multi-process
+            //Must call SwipeBackHelper.init(Application) in your main process
             SwipeBackHelper.init(this)
         }
     }
