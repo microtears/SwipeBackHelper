@@ -1,4 +1,4 @@
-package com.messy.swipebackhelper;
+package com.microtears.swipebackhelper;
 
 import org.junit.Test;
 

@@ -1,0 +1,15 @@
+ext {
+    bintrayRepo = 'android'
+
+    publishedGroupId = 'com.microtears.swipebackhelper'
+    siteUrl = 'https://github.com/microtears/swipebackhelper'
+    gitUrl = 'https://github.com/microtears/swipebackhelper.git'
+
+    developerId = 'swordsoul'
+    developerName = 'microtears'
+    developerEmail = 'microtears@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}

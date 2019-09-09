@@ -1,4 +1,4 @@
-package com.messy.swipebackhelper
+package com.microtears.swipebackhelper
 
 import android.app.Activity
 import android.app.Application

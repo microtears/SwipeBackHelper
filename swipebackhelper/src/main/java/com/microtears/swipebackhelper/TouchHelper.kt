@@ -1,4 +1,4 @@
-package com.messy.swipebackhelper
+package com.microtears.swipebackhelper
 
 import android.animation.Animator
 import android.animation.ValueAnimator
@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
+import com.microtears.swipebackhelper.ShadowView
 
 class TouchHelper(private val lifecycleHelper: ActivityLifecycleHelper) {
 
@@ -82,13 +83,6 @@ class TouchHelper(private val lifecycleHelper: ActivityLifecycleHelper) {
         }
         return false
     }
-
-//    /*
-//    * 忽略点击
-//    * */
-//    private fun checkTime(ev: MotionEvent): Boolean {
-//        return ev.downTime - lastDownTime > 100
-//    }
 
     private fun startAnim(isFinished: Boolean, x: Float) {
         needClearColorCurrent = false
@@ -191,6 +185,5 @@ class TouchHelper(private val lifecycleHelper: ActivityLifecycleHelper) {
         }
         shadowView?.x = -SHADOW_WIDTH + rawX
         shadowView?.alpha = 1 - (rawX / context.displayWidth)
-        Log.d("TH", "alpha=${shadowView?.alpha}")
     }
 }

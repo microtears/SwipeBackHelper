@@ -1,4 +1,4 @@
-package com.messy.swipebackhelper
+package com.microtears.swipebackhelper
 
 import android.app.Application
 import android.view.MotionEvent

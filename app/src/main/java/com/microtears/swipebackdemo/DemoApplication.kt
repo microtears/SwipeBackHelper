@@ -1,9 +1,9 @@
-package com.messy.swipebackdemo
+package com.microtears.swipebackdemo
 
 import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
-import com.messy.swipebackhelper.SwipeBackHelper
+import com.microtears.swipebackhelper.SwipeBackHelper
 
 class DemoApplication : Application() {
     override fun onCreate() {
@@ -13,7 +13,7 @@ class DemoApplication : Application() {
         }
     }
 
-    fun getCurrentProcessName(): String {
+    private fun getCurrentProcessName(): String {
         val pid = android.os.Process.myPid()
         val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         for (process in activityManager.runningAppProcesses) {
@@ -23,7 +23,7 @@ class DemoApplication : Application() {
         return ""
     }
 
-    fun isMainProcess(): Boolean {
+    private fun isMainProcess(): Boolean {
         return packageName == getCurrentProcessName()
     }
 }
